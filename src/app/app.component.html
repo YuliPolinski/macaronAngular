@@ -1,4 +1,7 @@
-<app-header *ngIf="headerData" [phoneNumber]="phoneNumber" [scrollToFn] = "scrollTo" [productsEl]="productsEl" [advantagesEl]="advantagesEl" [orderEl]="orderEl"></app-header>
+<app-header *ngIf="headerData" [phoneNumber]="phoneNumber" [scrollToFn]="scrollTo"
+            [productsEl]="productsEl" [advantagesEl]="advantagesRef">
+  [orderEl]="orderEl">
+</app-header>
 <section class="main">
   <div class="container">
     <div class="main-info">
@@ -7,7 +10,8 @@
         Побалуйте себя и своих близких самыми вкусными и ароматными домашними пироженками Macaroon!
       </div>
       <div class="main-info__actions">
-        <button class="main-actions__button button" (click)="scrollTo(productsEl)">Выбрать макарун</button>
+        <button class="main-actions__button button" appButtonHover (click)="scrollTo(productsEl)">Выбрать макарун
+        </button>
       </div>
     </div>
     <div class="main-image">
@@ -15,51 +19,15 @@
     </div>
   </div>
 </section>
-<section class="advantages" #advantagesEl>
-  <div class="container">
-    <div class="advantages-title">
-      Мы печём для вас вкуснейшие макаруны уже более 10 лет
-    </div>
-    <div class="advantages-text">
-      Все пироженки мы готовим только из натуральных и качественных продуктов, без консервантов, ароматизаторов,
-      красителей. Используем в приготовлении сливочное масло 82,5%, без дрожжей, маргарина, разрыхлителей и
-      улучшителей муки.
-    </div>
-    <div class="advantages-image">
-      <img src="assets/images/advantages.png" alt="Big macaroon">
-    </div>
-    <div class="advantages-items">
-      <div class="advantages-item" *ngFor="let item of advantagesItems">
-        <div class="advantages-item__number">
-          <div>{{item.numberItem}}</div>
-        </div>
-        <div class="advantages-item__title">{{item.titleItem}}</div>
-        <div class="advantages-item__text">{{item.textItem}}</div>
-      </div>
-    </div>
-  </div>
-</section>
+<app-advantages (elementReady)="advantagesRef = $event.nativeElement"></app-advantages>
 <section class="products" #productsEl>
   <div class="container">
     <div class="products-title">
       Выберите свой макарун
     </div>
     <div class="products-items">
-      <div class="products-item" *ngFor="let product of productsItems; let i = index">
-        <div class="products-item__image">
-          <img src="assets/images/{{product.image}}" alt="macaroon {{i+1}}">
-        </div>
-        <div class="products-item__text">{{product.title}}</div>
-        <div class="products-item__order">
-          <div class="products-item__price">
-            <div>{{product.quantity}}</div>
-            <div>{{product.price}}</div>
-          </div>
-          <div class="products-item__buttons" (click)="addToCard(product, orderEl)">
-            <button class="button products-item__button">Заказать</button>
-          </div>
-        </div>
-      </div>
+      <app-product-card *ngFor="let item of productsItems" [product]="item" [scrollToFn]="scrollTo" [orderEl]="orderEl"
+                        (addToCard)="addToCard($event)"></app-product-card>
     </div>
   </div>
 </section>
@@ -81,13 +49,15 @@
       </div>
       <form action="#">
         <label> Ваш выбор
-          <input type="text" class="order-input" name="productTitle" placeholder="Напишите, что хотите заказать..." [(ngModel)]="formValues.productTitle">
+          <input type="text" class="order-input" name="productTitle" placeholder="Напишите, что хотите заказать..."
+                 [(ngModel)]="formValues.productTitle">
         </label>
         <label> Заполните данные для заказа
           <input type="text" class="name-input" name="name" placeholder="Ваше имя" [(ngModel)]="formValues.name">
-          <input type="tel" class="phone-input" name="phone" placeholder="+375 (__) ___ - __ - __" [(ngModel)]="formValues.phone">
+          <input type="tel" class="phone-input" name="phone" placeholder="+375 (__) ___ - __ - __"
+                 [(ngModel)]="formValues.phone">
         </label>
-        <button class="button order-form__btn" (click)="createOrder()">Оформить заказ</button>
+        <button class="button order-form__btn" appButtonHover (click)="createOrder()">Оформить заказ</button>
       </form>
     </div>
   </div>
@@ -95,9 +65,10 @@
 <app-footer [phoneNumber]="phoneNumber" [instagramLink]="instagramLink"></app-footer>
 <div class="present">
   <div class="present-img" (mouseenter)="showPopup = true" (mouseleave)="showPopup = false">
-    <img src="assets/images/present.png" alt="Present">
+    <img src="assets/images/cart.png" alt="Present">
   </div>
+  <div class="cart-count">{{ CartService.count }}</div>
   <div class="present-popup" [class.show]="showPopup">
-    <div class="present-popup__block">Оформите заказ и получите подарок!</div>
+    <div class="present-popup__block">{{ totalStr }} руб.</div>
   </div>
 </div>

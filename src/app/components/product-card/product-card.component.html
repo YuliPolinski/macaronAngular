@@ -1,0 +1,16 @@
+<div class="products-item">
+  <div class="products-item__image">
+    <img src="assets/images/{{product.image}}" alt="'macaroon ' + product.title">
+  </div>
+  <div class="products-item__text">{{ product.title }}</div>
+  <div class="products-item__order">
+    <div class="products-item__price">
+      <div>{{ product.quantity }}</div>
+      <div>{{ product.price | currency:'RUB':'symbol-narrow':'1.2-2':'en-US' | replaceRub }}</div>
+    </div>
+    <div class="products-item__buttons" (click)="onOrder()">
+      <button class="button products-item__button" appButtonHover>Заказать</button>
+    </div>
+  </div>
+</div>
+

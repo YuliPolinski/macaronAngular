@@ -1,63 +1,23 @@
-import { Component, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
-import {AdvantagesItemsType} from "./types/advantages-items.type";
+import {Component, ViewChild, ElementRef, OnInit} from '@angular/core';
 import {ProductItemsType} from "./types/product-items.type";
+import {ProductsService} from "./services/products.service";
+import {CartService} from "./services/cart.service";
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
 
-  public advantagesItems: AdvantagesItemsType[] = [
-    {
-      numberItem: '1',
-      titleItem: 'Лучшие продукты',
-      textItem: 'Мы честно готовим макаруны только из натуральных и качественных продуктов. Мы не используем консерванты, ароматизаторы и красители.'
-    },
-    {
-      numberItem: '2',
-      titleItem: 'Много вкусов',
-      textItem: 'Наша задача – предоставить вам широкое разнобразие вкусов. Вы удивитесь, но у нас более 70 вкусов пироженок.'
-    },
-    {
-      numberItem: '3',
-      titleItem: 'Бисквитное тесто',
-      textItem: 'Все пирожные готовятся на бисквитном тесте с качественным сливочным маслом 82,5%. В составе нет маргарина и дрожжей!'
-    },
-    {
-      numberItem: '4',
-      titleItem: 'Честный продукт',
-      textItem: 'Вкус, качество и безопасность наших пирогов подтверждена декларацией о соответствии, которую мы получили 22.06.2016 г.'
-    },
-  ];
 
-  public productsItems: ProductItemsType[] = [
-    {
-      image: 'products1.png',
-      title: 'Макарун с малиной',
-      quantity: '1 шт.',
-      price: '1,70 руб.',
-    },
-    {
-      image: 'products2.png',
-      title: 'Макарун с манго',
-      quantity: '1 шт.',
-      price: '1,70 руб.',
-    },
-    {
-      image: 'products3.png',
-      title: 'Пирог с ванилью',
-      quantity: '1 шт.',
-      price: '1,70 руб.',
-    },
-    {
-      image: 'products4.png',
-      title: 'Пирог с фисташками',
-      quantity: '1 шт.',
-      price: '1,70 руб.',
-    },
-  ];
+  constructor(private ProductsService: ProductsService,
+              public CartService: CartService) {
+  }
+
+
+  public productsItems: ProductItemsType[] = [];
+  public advantagesRef!: HTMLElement;
 
   public formValues = {
     productTitle: '',
@@ -65,13 +25,32 @@ export class AppComponent {
     phone: '',
   };
 
+  ngOnInit() {
+    this.productsItems = this.ProductsService.getProducts();
+  }
+
   public scrollTo(target: HTMLElement): void {
     target.scrollIntoView({behavior: 'smooth'});
   }
 
-  public addToCard(product: ProductItemsType, target: HTMLElement): void {
-    this.scrollTo(target);
-    this.formValues.productTitle = product.title.toUpperCase();
+  // public addToCard(product: ProductItemsType, target: HTMLElement): void {
+  //   this.scrollTo(target);
+  //   this.formValues.productTitle = product.title.toUpperCase();
+  //   this.CartService.count++;
+  //   this.CartService.totalPrice += product.price;
+  //   alert(`${product.title} добавлен в корзину!`);
+  // }
+
+  public addToCard(event: { product: ProductItemsType, target: HTMLElement }): void {
+    this.scrollTo(event.target);
+    this.formValues.productTitle = event.product.title.toUpperCase();
+    this.CartService.count++;
+    this.CartService.totalPrice += event.product.price;
+    alert(`${event.product.title} добавлен в корзину!`);
+  }
+
+  public get totalStr(): string {
+    return this.CartService.totalPrice.toFixed(2).replace('.', ',');
   }
 
   public createOrder(): void {
@@ -98,24 +77,26 @@ export class AppComponent {
   }
 
   public showPopup: boolean = false;
-  public phoneNumber: string = '+375 (29) 368-98-68';
+  public phoneNumber: string = '375293689868';
   public instagramLink: string = 'https://www.instagram.com/';
 
-  @ViewChild('productsEl') productsEl!: ElementRef;
-  @ViewChild('advantagesEl') advantagesEl!: ElementRef;
-  @ViewChild('orderEl') orderEl!: ElementRef;
+  @ViewChild('productsEl') productsEl!: ElementRef<HTMLElement>;
+  @ViewChild('advantagesEl') advantagesEl!: ElementRef<HTMLElement>;
+  @ViewChild('orderEl') orderEl!: ElementRef<HTMLElement>;
 
   public headerData: any = null;
 
   ngAfterViewInit(): void {
-    this.headerData = {
-      phoneNumber: this.phoneNumber,
-      instagramLink: this.instagramLink,
-      scrollToFn: this.scrollTo.bind(this),
-      productsEl: this.productsEl.nativeElement,
-      advantagesEl: this.advantagesEl.nativeElement,
-      orderEl: this.orderEl.nativeElement,
-    };
+    setTimeout(() => {
+      this.headerData = {
+        phoneNumber: this.phoneNumber,
+        instagramLink: this.instagramLink,
+        scrollToFn: this.scrollTo.bind(this),
+        productsEl: this.productsEl?.nativeElement,
+        advantagesEl: this.advantagesEl?.nativeElement,
+        orderEl: this.orderEl?.nativeElement,
+      };
+    });
   }
 
 }

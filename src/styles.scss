@@ -47,6 +47,26 @@ a {
   margin: 0 auto;
 }
 
+
+.button {
+  //background-image: linear-gradient(to bottom, rgb(215, 72, 92) 0%, rgb(113, 8, 30) 100%);
+  //background-image: -webkit-linear-gradient(90deg, rgb(113, 8, 30) 0%, rgb(215, 72, 92) 100%);
+  //background-image: -ms-linear-gradient(90deg, rgb(113, 8, 30) 0%, rgb(215, 72, 92) 100%);
+  border-radius: 30px;
+  color: rgb(255, 255, 255);
+  font-family: GilroyBold, sans-serif;
+  text-align: center;
+  //transition: 0.3s linear;
+  cursor: pointer;
+  padding: 22px;
+  border: none;
+  outline: none;
+}
+
+//.button:hover {
+//  box-shadow: 0 7px 20px 0 #7c0f24;
+//}
+
 .contacts {
   font-size: 16px;
   font-family: GilroyBold, sans-serif;
@@ -58,3 +78,4 @@ a {
     padding: 0 18px;
   }
 }
+
