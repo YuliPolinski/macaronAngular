@@ -32,15 +32,7 @@ export class AppComponent implements OnInit {
   public scrollTo(target: HTMLElement): void {
     target.scrollIntoView({behavior: 'smooth'});
   }
-
-  // public addToCard(product: ProductItemsType, target: HTMLElement): void {
-  //   this.scrollTo(target);
-  //   this.formValues.productTitle = product.title.toUpperCase();
-  //   this.CartService.count++;
-  //   this.CartService.totalPrice += product.price;
-  //   alert(`${product.title} добавлен в корзину!`);
-  // }
-
+  
   public addToCard(event: { product: ProductItemsType, target: HTMLElement }): void {
     this.scrollTo(event.target);
     this.formValues.productTitle = event.product.title.toUpperCase();
@@ -84,19 +76,28 @@ export class AppComponent implements OnInit {
   @ViewChild('advantagesEl') advantagesEl!: ElementRef<HTMLElement>;
   @ViewChild('orderEl') orderEl!: ElementRef<HTMLElement>;
 
-  public headerData: any = null;
+  public headerData: {
+    phoneNumber: string;
+    instagramLink: string;
+    scrollToFn: (target: HTMLElement) => void;
+    productsEl: HTMLElement;
+    advantagesEl: HTMLElement;
+    orderEl: HTMLElement;
+  } | null = null;
 
-  ngAfterViewInit(): void {
-    setTimeout(() => {
+  public onAdvantagesReady(element: ElementRef<HTMLElement>) {
+    this.advantagesRef = element.nativeElement;
+
+    if (this.productsEl && this.orderEl && this.advantagesRef) {
       this.headerData = {
         phoneNumber: this.phoneNumber,
         instagramLink: this.instagramLink,
         scrollToFn: this.scrollTo.bind(this),
-        productsEl: this.productsEl?.nativeElement,
-        advantagesEl: this.advantagesEl?.nativeElement,
-        orderEl: this.orderEl?.nativeElement,
+        productsEl: this.productsEl.nativeElement,
+        advantagesEl: this.advantagesRef,
+        orderEl: this.orderEl.nativeElement,
       };
-    });
+    }
   }
 
 }

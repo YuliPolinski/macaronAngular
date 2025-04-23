@@ -1,6 +1,5 @@
 <app-header *ngIf="headerData" [phoneNumber]="phoneNumber" [scrollToFn]="scrollTo"
-            [productsEl]="productsEl" [advantagesEl]="advantagesRef">
-  [orderEl]="orderEl">
+            [productsEl]="productsEl" [advantagesEl]="headerData.advantagesEl" [orderEl]="orderEl">
 </app-header>
 <section class="main">
   <div class="container">
@@ -19,7 +18,7 @@
     </div>
   </div>
 </section>
-<app-advantages (elementReady)="advantagesRef = $event.nativeElement"></app-advantages>
+<app-advantages (elementReady)="onAdvantagesReady($event)"></app-advantages>
 <section class="products" #productsEl>
   <div class="container">
     <div class="products-title">

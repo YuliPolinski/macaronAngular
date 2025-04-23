@@ -12,7 +12,7 @@ export class HeaderComponent implements OnInit {
   @Input() advantagesEl!: HTMLElement;
   @Input() orderEl!: HTMLElement;
 
-  scrollToSection(target: HTMLElement) {
+  scrollToSection(target: HTMLElement): void {
     this.scrollToFn(target);
   }
 

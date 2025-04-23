@@ -380,10 +380,6 @@
   .products-items {
     column-gap: 25px;
   }
-
-  .advantages-image {
-    margin-left: unset;
-  }
 }
 
 @media screen and (max-width: 990px) {
@@ -466,55 +462,6 @@
     bottom: 60px;
   }
 
-  .advantages {
-    padding: 119px 32px 123px 32px;
-  }
-
-  .advantages .container {
-    grid-template-columns: auto;
-    text-align: center;
-    justify-items: center;
-  }
-
-  .advantages-image {
-    grid-column: unset;
-    grid-row: unset;
-    margin-bottom: 88px;
-  }
-
-  .advantages-image {
-    max-width: 302px;
-  }
-
-  .advantages-title {
-    max-width: 500px;
-    margin-bottom: 61px;
-  }
-
-  .advantages-text {
-    max-width: 650px;
-    margin-bottom: 40px;
-    font-size: 17px;
-  }
-
-  .advantages-items {
-    grid-column: unset;
-    display: grid;
-    grid-template-columns: repeat(2, 217px);
-    column-gap: unset;
-    grid-gap: 99px 54px;
-    align-items: baseline;
-  }
-
-  .advantages-item {
-    display: grid;
-    justify-items: center;
-  }
-
-  .advantages-item__number {
-    text-align: justify;
-  }
-
   .products-items {
     gap: 136px 29px;
   }
@@ -553,9 +500,6 @@
     left: 60px;
   }
 
-  .advantages {
-    padding: 100px 0;
-  }
 }
 
 @media screen and (max-width: 680px) {
@@ -591,14 +535,6 @@
     justify-content: center;
     row-gap: 136px;
   }
-}
-
-
-@media screen and (max-width: 620px) {
-  .advantages-items {
-    gap: 36px 15px;
-  }
-
 }
 
 
@@ -682,17 +618,6 @@
 
 }
 
-@media screen and (max-width: 500px) {
-  .advantages-title {
-    font-size: 30px;
-  }
-
-  .advantages-items {
-    grid-template-columns: repeat(2, auto);
-  }
-
-}
-
 @media screen and (max-width: 480px) {
   .main-image {
     left: -23px;
@@ -772,24 +697,6 @@
     left: 35px;
   }
 
-  .advantages .container {
-    padding: 0 16px;
-  }
-
-  .advantages-text {
-    font-size: 16px;
-  }
-
-  .advantages-item__title {
-    font-size: 18px;
-  }
-
-  .advantages-item__text {
-    font-size: 13px;
-    width: 165px;
-  }
-
-
   .products-title {
     margin-bottom: 123px;
   }
@@ -824,10 +731,6 @@
 }
 
 @media screen and (max-width: 370px) {
-  .advantages-items {
-    grid-template: repeat(4, auto) / 1fr;
-    row-gap: 36px;
-  }
 
   .order__left-strawberry {
     left: 150px;
